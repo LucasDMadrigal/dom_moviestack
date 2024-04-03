@@ -24,3 +24,13 @@
 .active{
     border: 2px solid white;
 }
+
+.banner_movie--container{
+    min-width: 100%;
+    min-height: 30%;
+    background-color: #6d38e0;
+}
+
+.card-text{
+    font-size: .7rem;
+}
