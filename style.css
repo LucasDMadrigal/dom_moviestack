@@ -1,36 +1,54 @@
-:root{
-    --color-purple : #6d38e0;
-    --color-grey : #d2ccff;
+:root {
+  --color-purple: #6d38e0;
+  --color-grey: #d2ccff;
 }
 
-.banner_container{
-    min-height: 40%;
-    min-width: 100%;
-    /* background-color: var(--grey); */
+.banner_container {
+  min-height: 40vh;
+  min-width: 100vw;
+  background-color: var(--color-grey);
+  background-image: url("https://moviestack.onrender.com/static/2pqmfzopqq.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.call_to_action--container{
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
+.call_to_action--container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.call_to_action--card {
+  background-color: var(--color-grey);
+  background-image: url("https://moviestack.onrender.com/static/0r81x6xczm.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  max-width: 440px;
 }
 
 .call_to_action{
-    background-color: var(--color-grey);
-    height: 240px;
-    width: 320px;
+  background-color: black;
+  color: white;
 }
 
-.active{
-    border: 2px solid white;
+@media (max-width: 640px) {
+  .call_to_action--card {
+    width: 42%;
+  }
 }
 
-.banner_movie--container{
-    min-width: 100%;
-    min-height: 30%;
-    background-color: #6d38e0;
+.active {
+  border: 2px solid white;
 }
 
-.card-text{
-    font-size: .7rem;
+.banner_movie--container {
+  min-width: 100%;
+  min-height: 30%;
+  background-color: #6d38e0;
+}
+
+.card-text {
+  font-size: 0.7rem;
 }

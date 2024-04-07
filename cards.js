@@ -13,9 +13,12 @@ function generarCard(movie) {
     `;
 }
 
-var contenedor = document.getElementById("card--container");
+const contenedor = document.getElementById("card--container");
+
+let template = ""
 
 movies.map((movie) => {
-  var card = generarCard(movie);
-  contenedor.innerHTML += card;
+  template += generarCard(movie);
 });
+
+contenedor.innerHTML = template
