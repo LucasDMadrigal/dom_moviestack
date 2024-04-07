@@ -7,7 +7,6 @@ function generarCard(movie) {
         <div class="card-body">
             <h5 class=" text-base">${movie.title}</h5>
             <p class="card-text">${movie.tagline}</p>
-            <p class="card-text">${movie.overview}</p>
         </div>
     </div>
     `;

@@ -49,6 +49,14 @@
   background-color: #6d38e0;
 }
 
+.card-body{
+  overflow: hidden;
+}
+
 .card-text {
-  font-size: 0.7rem;
+  font-size: 1rem;
+  color: gray;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
