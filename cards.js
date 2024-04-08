@@ -14,10 +14,53 @@ function generarCard(movie) {
 
 const contenedor = document.getElementById("card--container");
 
-let template = ""
+var template = "";
 
 movies.map((movie) => {
   template += generarCard(movie);
 });
 
-contenedor.innerHTML = template
+contenedor.innerHTML = template;
+
+function filtrarPeliculasPorGenero() {
+  contenedor.innerHTML = ""
+  let select = document.getElementById("genresSelect");
+  let selectedGenre = select.value;
+  
+  
+  let peliculasFiltradas = movies.filter( (pelicula) => {
+    return pelicula.genres.includes(selectedGenre);
+  });
+  console.log("🚀 ~ peliculasFiltradas ~ peliculasFiltradas:", peliculasFiltradas)
+  
+  peliculasFiltradas.forEach((movie) => {
+    template += generarCard(movie);
+  });
+  
+}
+contenedor.innerHTML = template;
+
+
+document
+  .getElementById("genresSelect")
+  .addEventListener("change", filtrarPeliculasPorGenero);
+
+// Horror
+// Mystery
+// Thriller
+// Adventure
+// Fantasy
+// Action
+// Science Fiction
+// Drama
+// Comedy
+// Crime
+// Animation
+// Family
+// Romance
+// Music
+// Documentary
+// History
+// War
+// Western
+// TV Movie
