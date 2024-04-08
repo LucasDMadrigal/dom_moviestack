@@ -13,6 +13,7 @@ function generarCard(movie) {
 }
 
 const contenedor = document.getElementById("card--container");
+const select = document.getElementById("genresSelect");
 
 var template = "";
 
@@ -23,27 +24,24 @@ movies.map((movie) => {
 contenedor.innerHTML = template;
 
 function filtrarPeliculasPorGenero() {
-  contenedor.innerHTML = ""
-  let select = document.getElementById("genresSelect");
-  let selectedGenre = select.value;
-  
-  
-  let peliculasFiltradas = movies.filter( (pelicula) => {
+  const selectedGenre = select.value;
+  contenedor.innerHTML = "";
+  template = ""
+  // contenedor.remove()
+
+  const peliculasFiltradas = movies.filter((pelicula) => {
     return pelicula.genres.includes(selectedGenre);
   });
-  console.log("🚀 ~ peliculasFiltradas ~ peliculasFiltradas:", peliculasFiltradas)
-  
+  console.log(peliculasFiltradas);
+
   peliculasFiltradas.forEach((movie) => {
     template += generarCard(movie);
   });
-  
+
+  contenedor.innerHTML = template;
 }
-contenedor.innerHTML = template;
 
-
-document
-  .getElementById("genresSelect")
-  .addEventListener("change", filtrarPeliculasPorGenero);
+select.addEventListener("change", filtrarPeliculasPorGenero);
 
 // Horror
 // Mystery
