@@ -1,4 +1,10 @@
 import movies from "./data.js";
+const contenedor = document.getElementById("card--container");
+const select = document.getElementById("genresSelect");
+const searchInput = document.getElementById("search_input");
+
+var filteredMovies = [];
+var template = "";
 
 function generarCard(movie) {
   return `
@@ -12,36 +18,46 @@ function generarCard(movie) {
     `;
 }
 
-const contenedor = document.getElementById("card--container");
-const select = document.getElementById("genresSelect");
-
-var template = "";
-
-movies.map((movie) => {
-  template += generarCard(movie);
-});
-
-contenedor.innerHTML = template;
-
-function filtrarPeliculasPorGenero() {
-  const selectedGenre = select.value;
+const renderizarCards = (pelis) => {
   contenedor.innerHTML = "";
-  template = ""
-  // contenedor.remove()
-
-  const peliculasFiltradas = movies.filter((pelicula) => {
-    return pelicula.genres.includes(selectedGenre);
-  });
-  console.log(peliculasFiltradas);
-
-  peliculasFiltradas.forEach((movie) => {
+  template = "";
+  pelis.map((movie) => {
     template += generarCard(movie);
   });
 
   contenedor.innerHTML = template;
+};
+
+renderizarCards(movies);
+
+function filtrarPeliculasPorGenero() {
+  const selectedGenre = select.value;
+  // contenedor.remove()
+
+  filteredMovies = movies.filter((pelicula) => {
+    return pelicula.genres.includes(selectedGenre);
+  });
+  console.log(filteredMovies);
+
+  renderizarCards(filteredMovies);
 }
 
+
 select.addEventListener("change", filtrarPeliculasPorGenero);
+
+searchInput.addEventListener("input", () => {
+  let search = searchInput.value
+  console.log("🚀 ~ searchInput.addEventListener ~ search:", search)
+
+  if (filteredMovies.length > 0) {
+    const filter = filteredMovies.filter(movie => movie.title.toLowerCase().includes(search.toLowerCase()))
+    renderizarCards(filter)
+  }
+  else{
+    const filter = movies.filter(movie => movie.title.toLowerCase().includes(search.toLowerCase()))
+    renderizarCards(filter)
+  }
+});
 
 // Horror
 // Mystery
