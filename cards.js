@@ -37,7 +37,6 @@ function filtrarPeliculasPorGenero() {
   filteredMovies = movies.filter((pelicula) => {
     return pelicula.genres.includes(selectedGenre);
   });
-  console.log(filteredMovies);
 
   renderizarCards(filteredMovies);
 }
@@ -47,7 +46,6 @@ select.addEventListener("change", filtrarPeliculasPorGenero);
 
 searchInput.addEventListener("input", () => {
   let search = searchInput.value
-  console.log("🚀 ~ searchInput.addEventListener ~ search:", search)
 
   if (filteredMovies.length > 0) {
     const filter = filteredMovies.filter(movie => movie.title.toLowerCase().includes(search.toLowerCase()))
