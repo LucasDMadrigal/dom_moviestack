@@ -2,6 +2,7 @@ import movies from "./data.js";
 const contenedor = document.getElementById("card--container");
 const select = document.getElementById("genresSelect");
 const searchInput = document.getElementById("search_input");
+const detailsButton = document.getElementById("details_button")
 
 var filteredMovies = [];
 var template = "";
@@ -13,6 +14,9 @@ function generarCard(movie) {
         <div class="card-body">
             <h5 class=" text-base">${movie.title}</h5>
             <p class="card-text">${movie.tagline}</p>
+            <div>
+            <a href="./details.html?id=${movie.id}" id="details_button">DETAILS</a>
+            </div>
         </div>
     </div>
     `;
@@ -32,7 +36,6 @@ renderizarCards(movies);
 
 function filtrarPeliculasPorGenero() {
   const selectedGenre = select.value;
-  // contenedor.remove()
 
   filteredMovies = movies.filter((pelicula) => {
     return pelicula.genres.includes(selectedGenre);
@@ -57,22 +60,6 @@ searchInput.addEventListener("input", () => {
   }
 });
 
-// Horror
-// Mystery
-// Thriller
-// Adventure
-// Fantasy
-// Action
-// Science Fiction
-// Drama
-// Comedy
-// Crime
-// Animation
-// Family
-// Romance
-// Music
-// Documentary
-// History
-// War
-// Western
-// TV Movie
+detailsButton.addEventListener("click", () => {
+
+})
