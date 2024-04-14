@@ -49,6 +49,10 @@
   background-color: #6d38e0;
 }
 
+.card{
+  width: 15%;
+}
+
 .card-body{
   overflow: hidden;
 }

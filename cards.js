@@ -56,8 +56,10 @@ document.getElementById("elemento").addEventListener("click", function () {
 
 function generarCard(movie) {
   return `
-    <div class="h-64 w-1/5 p-2 border-solid	border-black border-2 ">
-        <img src="https://moviestack.onrender.com/static/${movie.image}" class="card-img-top h-1/2" alt="main_image_movie">
+    <div class="card h-64 p-2 border-solid	border-black border-2 ">
+    <picture class"w-full flex justify-center ">
+    <img src="https://moviestack.onrender.com/static/${movie.image}" class="card-img-top h-1/2" alt="main_image_movie">
+    </picture>
         <div class=" h-1/2 card-body flex flex-col justify-between">
 
         <div class="">
