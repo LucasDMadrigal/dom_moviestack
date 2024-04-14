@@ -1,5 +1,5 @@
 const contenedor = document.getElementById("card--container");
-const select = document.getElementById("genresSelect");
+const selectGeneros = document.getElementById("genresSelect");
 const searchInput = document.getElementById("search_input");
 const detailsButton = document.getElementById("details_button");
 const $ctn = document.getElementById("card--container");
@@ -32,9 +32,8 @@ fetch(URL, {
   .then((response) => response.json())
   .then((data) => {
     movies = data.movies;
-    console.log("🚀 ~ data:", data);
-    console.log("🚀 ~ movies:", movies);
     renderizarCards(movies);
+    agregarGeneros(movies);
   })
   .catch((error) => {
     console.error("Error al realizar la solicitud fetch:", error);
@@ -44,10 +43,8 @@ function toggleFavorito(id) {
   const index = favoritos.indexOf(id);
   if (index === -1) {
     favoritos.push(id);
-    console.log("Elemento agregado a favoritos:", id);
   } else {
     favoritos.splice(index, 1);
-    console.log("Elemento eliminado de favoritos:", id);
   }
 
   localStorage.setItem("favoritos", JSON.stringify(favoritos));
@@ -66,8 +63,8 @@ function generarCard(movie) {
             <p class="card-text">${movie.tagline}</p>
           </div>
             <div class="flex justify-between">
-            <a href="./details.html?id=${movie.id}" class="card_action" id="details_button">DETAILS</a>
-            <button class="card_action" data-id="${movie.id}">ME GUSTA</button>
+            <a href="./details.html?id=${movie.id}" class="card_action" id="details_button">detalles</a>
+            <button class="card_action" data-id="${movie.id}">me gusta</button>
             </div>
         </div>
     </div>
@@ -75,16 +72,23 @@ function generarCard(movie) {
 }
 
 function filtrarPeliculasPorGenero() {
-  const selectedGenre = select.value;
+  const selectedGenre = selectGeneros.value;
+  let search = searchInput.value;
 
   filteredMovies = movies.filter((pelicula) => {
     return pelicula.genres.includes(selectedGenre);
   });
+  const filtradoPorNombreYGenero = filteredMovies.filter((peli) => {
+    return peli.title.toLowerCase().includes(search.toLowerCase());
+  });
 
-  renderizarCards(filteredMovies);
+  if (search) {
+    renderizarCards(filtradoPorNombreYGenero);
+  } else {
+    renderizarCards(filteredMovies);
+  }
 }
-
-select.addEventListener("change", filtrarPeliculasPorGenero);
+selectGeneros.addEventListener("change", filtrarPeliculasPorGenero);
 
 searchInput.addEventListener("input", () => {
   let search = searchInput.value;
@@ -102,12 +106,33 @@ searchInput.addEventListener("input", () => {
   }
 });
 
-$ctn.addEventListener("click", ({ target }) => {
-  console.log(target.dataset.id);
-  if (target.dataset.id) {
-    console.log("tamo ready");
-    toggleFavorito(target.dataset.id);
+function agregarGeneros(arrayDePelis) {
+  const generos = arrayDePelis?.map((movie) => {
+    return movie.genres;
+  });
+
+  let generosUnicos = [...new Set(generos?.flat())];
+
+  if (selectGeneros) {
+    generosUnicos?.forEach(function (elemento) {
+      var opcion = document.createElement("option");
+      opcion.text = elemento;
+      opcion.value = elemento;
+      selectGeneros.appendChild(opcion);
+    });
   } else {
-    console.log("no tamo ready");
+    console.error(
+      "El elemento select con ID '" + selectId + "' no fue encontrado."
+    );
+  }
+}
+
+agregarGeneros();
+
+$ctn.addEventListener("click", ({ target }) => {
+  if (target.dataset.id) {
+    toggleFavorito(target.dataset.id);
   }
 });
+
+favoritos.map((fav) => {});
