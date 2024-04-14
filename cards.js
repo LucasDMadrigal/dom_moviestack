@@ -57,10 +57,13 @@ document.getElementById("elemento").addEventListener("click", function () {
 function generarCard(movie) {
   return `
     <div class="h-64 w-1/5 p-2 border-solid	border-black border-2 ">
-        <img src="https://moviestack.onrender.com/static/${movie.image}" class="card-img-top" alt="main_image_movie">
-        <div class="card-body">
+        <img src="https://moviestack.onrender.com/static/${movie.image}" class="card-img-top h-1/2" alt="main_image_movie">
+        <div class=" h-1/2 card-body flex flex-col justify-between">
+
+        <div class="">
             <h5 class=" text-base">${movie.title}</h5>
             <p class="card-text">${movie.tagline}</p>
+          </div>
             <div>
             <a href="./details.html?id=${movie.id}" id="details_button">DETAILS</a>
             </div>
