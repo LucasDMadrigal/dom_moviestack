@@ -2,6 +2,7 @@ const contenedor = document.getElementById("card--container");
 const select = document.getElementById("genresSelect");
 const searchInput = document.getElementById("search_input");
 const detailsButton = document.getElementById("details_button");
+const $ctn = document.getElementById("card--container");
 
 const apiKey = "0ff70d54-dc0b-4262-9c3d-776cb0f34dbd";
 const URL = "https://moviestack.onrender.com/api/movies";
@@ -9,6 +10,10 @@ const URL = "https://moviestack.onrender.com/api/movies";
 var filteredMovies = [];
 var template = "";
 let movies = [];
+
+localStorage.setItem("favoritos", JSON.stringify([]));
+let favoritos = JSON.parse(localStorage.getItem("favoritos"));
+
 const renderizarCards = (pelis) => {
   contenedor.innerHTML = "";
   template = "";
@@ -18,6 +23,7 @@ const renderizarCards = (pelis) => {
 
   contenedor.innerHTML = template;
 };
+
 fetch(URL, {
   headers: {
     "x-api-key": apiKey,
@@ -35,8 +41,6 @@ fetch(URL, {
   });
 
 function toggleFavorito(id) {
-  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
   const index = favoritos.indexOf(id);
   if (index === -1) {
     favoritos.push(id);
@@ -48,11 +52,6 @@ function toggleFavorito(id) {
 
   localStorage.setItem("favoritos", JSON.stringify(favoritos));
 }
-
-document.getElementById("elemento").addEventListener("click", function () {
-  let id = this.getAttribute("data-id");
-  toggleFavorito(id);
-});
 
 function generarCard(movie) {
   return `
@@ -66,8 +65,9 @@ function generarCard(movie) {
             <h5 class=" text-base">${movie.title}</h5>
             <p class="card-text">${movie.tagline}</p>
           </div>
-            <div>
-            <a href="./details.html?id=${movie.id}" id="details_button">DETAILS</a>
+            <div class="flex justify-between">
+            <a href="./details.html?id=${movie.id}" class="card_action" id="details_button">DETAILS</a>
+            <button class="card_action" data-id="${movie.id}">ME GUSTA</button>
             </div>
         </div>
     </div>
@@ -99,5 +99,15 @@ searchInput.addEventListener("input", () => {
       movie.title.toLowerCase().includes(search.toLowerCase())
     );
     renderizarCards(filter);
+  }
+});
+
+$ctn.addEventListener("click", ({ target }) => {
+  console.log(target.dataset.id);
+  if (target.dataset.id) {
+    console.log("tamo ready");
+    toggleFavorito(target.dataset.id);
+  } else {
+    console.log("no tamo ready");
   }
 });
