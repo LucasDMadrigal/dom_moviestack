@@ -3,16 +3,16 @@ const selectGeneros = document.getElementById("genresSelect");
 const searchInput = document.getElementById("search_input");
 const detailsButton = document.getElementById("details_button");
 const $ctn = document.getElementById("card--container");
-
 const apiKey = "0ff70d54-dc0b-4262-9c3d-776cb0f34dbd";
 const URL = "https://moviestack.onrender.com/api/movies";
 
 var filteredMovies = [];
 var template = "";
 let movies = [];
+let moviesCards = []
 
-localStorage.setItem("favoritos", JSON.stringify([]));
-let favoritos = JSON.parse(localStorage.getItem("favoritos"));
+let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+localStorage.setItem("favoritos", JSON.stringify(favoritos));
 
 const renderizarCards = (pelis) => {
   contenedor.innerHTML = "";
@@ -34,6 +34,9 @@ fetch(URL, {
     movies = data.movies;
     renderizarCards(movies);
     agregarGeneros(movies);
+    moviesCards =  Array.prototype.slice.call(document.getElementsByClassName("like_button"))
+
+
   })
   .catch((error) => {
     console.error("Error al realizar la solicitud fetch:", error);
@@ -43,7 +46,9 @@ function toggleFavorito(id) {
   const index = favoritos.indexOf(id);
   if (index === -1) {
     favoritos.push(id);
-  } else {
+    document.querySelector(`[ data-id="${id}"]`).classList.add("like_active")
+    } else {
+    document.querySelector(`[ data-id="${id}"]`).classList.remove("like_active")
     favoritos.splice(index, 1);
   }
 
@@ -64,7 +69,7 @@ function generarCard(movie) {
           </div>
             <div class="flex justify-between">
             <a href="./details.html?id=${movie.id}" class="card_action" id="details_button">detalles</a>
-            <button class="card_action" data-id="${movie.id}">me gusta</button>
+            <button class="like_button card_action" data-id="${movie.id}">me gusta</button>
             </div>
         </div>
     </div>
@@ -135,4 +140,9 @@ $ctn.addEventListener("click", ({ target }) => {
   }
 });
 
-favoritos.map((fav) => {});
+moviesCards.forEach((peli) => {
+  console.log("favoritos",favoritos);
+  // if (favoritos?.includes(peli.dataset.id)) {
+  //   movies.classList.add("like_active")
+  // }
+});

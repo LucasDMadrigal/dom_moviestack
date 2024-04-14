@@ -87,3 +87,7 @@ button.card_action:hover{
   border: 2px solid var(--color-green);
 }
 
+.like_active{
+  background-color: var(--color-green);
+  color: black;
+}
