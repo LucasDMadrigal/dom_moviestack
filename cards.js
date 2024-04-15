@@ -137,10 +137,6 @@ function agregarGeneros(arrayDePelis) {
       opcion.value = elemento;
       selectGeneros.appendChild(opcion);
     });
-  } else {
-    console.error(
-      "El elemento select con ID '" + selectId + "' no fue encontrado."
-    );
   }
 }
 
