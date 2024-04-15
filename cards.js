@@ -47,7 +47,6 @@ fetch(URL, {
       document.getElementsByClassName("like_button")
     );
     moviesCards.forEach((card) => {
-      console.log("🚀 ~ .then ~ card:", card);
       toggleColorAFavs(card.dataset.id);
     });
   })
