@@ -9,7 +9,7 @@ const URL = "https://moviestack.onrender.com/api/movies";
 var filteredMovies = [];
 var template = "";
 let movies = [];
-let moviesCards = []
+let moviesCards = [];
 
 let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 localStorage.setItem("favoritos", JSON.stringify(favoritos));
@@ -24,6 +24,15 @@ const renderizarCards = (pelis) => {
   contenedor.innerHTML = template;
 };
 
+const toggleColorAFavs = (id) => {
+  const buttonMeGusta = document.querySelector(`[ data-id="${id}"]`);
+  if (favoritos.includes(id)) {
+    buttonMeGusta.classList.add("like_active");
+  } else {
+    buttonMeGusta.classList.remove("like_active");
+  }
+};
+
 fetch(URL, {
   headers: {
     "x-api-key": apiKey,
@@ -34,9 +43,13 @@ fetch(URL, {
     movies = data.movies;
     renderizarCards(movies);
     agregarGeneros(movies);
-    moviesCards =  Array.prototype.slice.call(document.getElementsByClassName("like_button"))
-
-
+    moviesCards = Array.prototype.slice.call(
+      document.getElementsByClassName("like_button")
+    );
+    moviesCards.forEach((card) => {
+      console.log("🚀 ~ .then ~ card:", card);
+      toggleColorAFavs(card.dataset.id);
+    });
   })
   .catch((error) => {
     console.error("Error al realizar la solicitud fetch:", error);
@@ -46,10 +59,10 @@ function toggleFavorito(id) {
   const index = favoritos.indexOf(id);
   if (index === -1) {
     favoritos.push(id);
-    document.querySelector(`[ data-id="${id}"]`).classList.add("like_active")
-    } else {
-    document.querySelector(`[ data-id="${id}"]`).classList.remove("like_active")
+    toggleColorAFavs(id)
+  } else {
     favoritos.splice(index, 1);
+    toggleColorAFavs(id)
   }
 
   localStorage.setItem("favoritos", JSON.stringify(favoritos));
@@ -138,11 +151,4 @@ $ctn.addEventListener("click", ({ target }) => {
   if (target.dataset.id) {
     toggleFavorito(target.dataset.id);
   }
-});
-
-moviesCards.forEach((peli) => {
-  console.log("favoritos",favoritos);
-  // if (favoritos?.includes(peli.dataset.id)) {
-  //   movies.classList.add("like_active")
-  // }
 });
